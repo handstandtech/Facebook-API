@@ -8,6 +8,7 @@ import com.handstandtech.facebook.shared.model.FacebookGraphUser;
 import com.handstandtech.facebook.shared.model.FacebookPhoto;
 import com.handstandtech.facebook.shared.model.FacebookUser;
 import com.handstandtech.facebook.shared.model.places.FacebookGraphCheckins;
+import com.handstandtech.restclient.shared.model.RESTResult;
 
 public interface FacebookAPI {
 
@@ -26,5 +27,7 @@ public interface FacebookAPI {
 	public abstract void subscribeToRealtimeUserUpdates(String access_token, String app_id);
 
 	public abstract List<FacebookPhoto> getRecentPhotosForUser(String uid, Integer limit);
+
+	public abstract RESTResult doFql(String fqlQuery);
 
 }

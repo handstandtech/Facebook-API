@@ -19,12 +19,13 @@ import com.handstandtech.facebook.shared.model.places.FacebookGraphCheckins;
 import com.handstandtech.restclient.server.RESTClient;
 import com.handstandtech.restclient.server.auth.NullAuthenticator;
 import com.handstandtech.restclient.server.impl.RESTClientAppEngineURLFetchImpl;
+import com.handstandtech.restclient.server.model.RESTRequest;
 import com.handstandtech.restclient.server.util.RESTUtil;
 import com.handstandtech.restclient.shared.model.RESTResult;
 import com.handstandtech.restclient.shared.model.RequestMethod;
 import com.handstandtech.restclient.shared.util.RESTURLUtil;
 
-public abstract class FacebookAPIImpl implements FacebookAPI {
+public class FacebookAPIImpl implements FacebookAPI {
 
 	private static String app_id;
 
@@ -236,6 +237,23 @@ public abstract class FacebookAPIImpl implements FacebookAPI {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("access_token", RESTUtil.encode(accessToken));
 		return params;
+	}
+
+	@Override
+	public RESTResult doFql(String fqlQuery) {
+
+		String baseUrl = BASE_URL + "/fql";
+		Map<String, String> params = getParamsWithAccessToken();
+		params.put("format", "json");
+
+		params.put("q", RESTUtil.encode(fqlQuery));
+		String fullUrl = RESTURLUtil.createFullUrl(baseUrl, params);
+		log.info("Full URL: " + fullUrl);
+
+		RESTRequest request = new RESTRequest(RequestMethod.GET, fullUrl);
+
+		RESTResult result = getRESTClient().request(request);
+		return result;
 	}
 
 }
