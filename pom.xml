@@ -12,6 +12,7 @@
 		<module>gwt-client</module>
 		<module>server</module>
 	</modules>
+
 	<organization>
 		<name>Handstand Technologies, LLC</name>
 		<url>http://handstandtech.com</url>
@@ -130,8 +131,12 @@
 			<url>http://repo1.maven.org/maven2/</url>
 		</repository>
 		<repository>
-			<id>restclient</id>
+			<id>facebook</id>
 			<url>https://github.com/handstandtech/Facebook-API/raw/master/mavenrepo</url>
+		</repository>
+		<repository>
+			<id>objectify-appengine</id>
+			<url>http://objectify-appengine.googlecode.com/svn/maven</url>
 		</repository>
 	</repositories>
 	<build>
@@ -176,6 +181,14 @@
 			</resource>
 		</resources>
 		<outputDirectory>target</outputDirectory>
-		<directory>../mavenrepo/com/handstandtech/facebook/${project.artifactId}/${project.version}/</directory>
 	</build>
+	<!-- BUILD PROFILES -->
+		<profiles>
+			<profile>
+				<id>release</id>
+				<build>
+					<directory>../mavenrepo/com/handstandtech/facebook/${project.artifactId}/${project.version}/</directory>
+				</build>
+			</profile>
+		</profiles>
 </project>
